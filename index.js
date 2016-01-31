@@ -21,7 +21,7 @@ app.set('view engine', 'jade');
 
 
 app.get('/', function(req, res) {
-  res.render('pages/index.jade');
+  res.render('pages/login.jade');
 });
 
 app.get('/login', function(req, res) {
