@@ -1,0 +1,10 @@
+=== leadhaus Config Vars
+CONTACTS_ACCOUNT_ID:       0016100000PGbTm
+DATABASE_URL:              postgres://yuiztbkchhoqop:oKokli-_a1s9mRzO3TmnDC0VDH@ec2-54-227-249-166.compute-1.amazonaws.com:5432/d1i361s4l12e55
+INTEGRATION_USER_NAME:     mlakshman@trailhead.geek
+INTEGRATION_USER_PASSWORD: s@lesforce123
+MANDRILL_APIKEY:           QpMA70PGVN2aevUyUYbmLA
+MANDRILL_USERNAME:         app46921536@heroku.com
+OAUTH_CLIENT_ID:           3MVG9KI2HHAq33RwPWIn7Q2Row5s.8LASjrQsc8A2V5LQ4Fwtfddzkgx60RqijpuoF7SgU2YVtMrPvIA0f4SL
+OAUTH_CLIENT_SECRET:       2916492833009121068
+OAUTH_REDIRECT_URL:        https://leadhaus.herokuapp.com
