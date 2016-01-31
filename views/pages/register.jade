@@ -1,0 +1,52 @@
+doctype html
+html
+    head
+        title Dashboard :: Register
+        link(rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css")
+        link(rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css")
+        link(rel='stylesheet', href='stylesheets/style.css')
+    body
+        .login.well
+
+            :verbatim
+            include navbar.html
+            br
+            br
+            h1  Create an Account!
+            hr
+            form(id='register-form', method='POST', action='/register' novalidate)
+                .form-group
+                    label(for='username') Username
+                    input(type='email', name='username', class='form-control',
+                    id='display', placeholder='Your username is your email',
+                    required, data-required-msg='Username required'
+                    data-available data-available-url="validate/email"
+                    data-available-msg="There is already an account associated with this email address"))
+                .form-group
+                    label(for='firstname') First Name
+                    input(type='text', name='firstname', class='form-control',
+                    id='firstname', placeholder='Enter first name',
+                    required, data-required-msg='First name is required')
+                .form-group
+                    label(for='lastname') Last Name
+                    input(type='text', name='lastname', class='form-control',
+                    id='lastname', placeholder='Enter last name',
+                    required, data-required-msg='Last name is required')
+                .form-group
+                    label(for='password') Password
+                    input(type='password', name='password', class='form-control',
+                    id='password', placeholder='Enter password',
+                    required, data-required-msg='Password is required')
+                .form-group
+                    label(for='confirm-password') Confirm Password
+                    input(type='password', name='confirm-password', class='form-control',
+                    id='confirm-password', placeholder='Confirm password',
+                    required, data-required-msg="Please confirm your password"
+                    data-matches='#password' data-matches-msg='The passwords do not match')
+                .form-group
+                    button.btn.btn-default Register
+                    a(href="login")   Or Login
+
+    script(src='//code.jquery.com/jquery-1.9.1.min.js')
+    script(src='//cdn.kendostatic.com/2013.3.1119/js/kendo.all.min.js')
+    //script(src='javascripts/validate.js')
