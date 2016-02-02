@@ -1,0 +1,46 @@
+doctype html
+block content
+html
+    head
+        title #title
+        link(rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css")
+        //link(rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css")
+        link(rel='stylesheet', href='stylesheets/style.css')
+    body
+        :verbatim
+        include navbar.html
+        br
+        br
+        br
+        br
+        table
+          div
+            tr
+              h4
+                div
+                  p1 &nbsp  First Name
+                  p1 &nbsp  Last Name &nbsp
+                  p1 &nbsp  Title &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp
+                  p1 &nbsp &nbsp &nbsp  &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp     Company &nbsp &nbsp
+                  p1 &nbsp &nbsp &nbsp &nbsp &nbsp  &nbsp &nbsp &nbsp &nbsp  &nbsp &nbsp &nbsp &nbsp  &nbsp &nbsp &nbsp  Phone &nbsp &nbsp
+                  p1 &nbsp &nbsp &nbsp &nbsp &nbsp  &nbsp &nbsp &nbsp  Email &nbsp &nbsp
+                  p1 &nbsp &nbsp &nbsp &nbsp &nbsp  &nbsp &nbsp &nbsp &nbsp  &nbsp &nbsp  Lead Source &nbsp &nbsp
+
+           each key,val in lead
+            div
+                tr
+                  td &nbsp &nbsp #{lead[val].firstname} &nbsp &nbsp
+                  td &nbsp &nbsp #{lead[val].lastname} &nbsp &nbsp
+                  td &nbsp &nbsp #{lead[val].title} &nbsp &nbsp
+                  td &nbsp &nbsp #{lead[val].company} &nbsp &nbsp
+                  td &nbsp &nbsp #{lead[val].phone} &nbsp &nbsp
+                  td &nbsp &nbsp #{lead[val].email} &nbsp &nbsp
+                  td &nbsp &nbsp #{lead[val].leadsource} &nbsp &nbsp
+                tr
+                    td &nbsp &nbsp &nbsp  &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp
+                    td &nbsp &nbsp &nbsp  &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp
+                    td &nbsp &nbsp &nbsp  &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp
+                    td &nbsp &nbsp &nbsp  &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp
+                    td &nbsp &nbsp &nbsp  &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp
+                    td &nbsp &nbsp &nbsp  &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp
+                    td &nbsp &nbsp &nbsp  &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp

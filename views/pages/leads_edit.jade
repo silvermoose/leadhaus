@@ -1,0 +1,27 @@
+block content
+    h1 New Lead
+    div
+        form( method="post")
+            div
+                div
+                    span.label First Name :
+                    input(type="text", name="firstname", id="editLeadFirstName")
+                div
+                    span.label Last Name :
+                    input(type="text", name="lastname", id="editLeadLastName")
+                div
+                    span.label Company :
+                    input(type="text", name="company", id="editLeadCompany")
+                div
+                    span.label Title    :
+                    input(type="text", name="title", id="editLeadTitle")
+                div
+                    span.label Email    :
+                    input(type="text", name="email", id="editLeadEmail")
+                div
+                    span.label Phone    :
+                    input(type="text", name="phone", id="editLeadPhone")
+                div#editEmployeeSubmit
+                    input(type="submit", value="Save")
+
+        a(href="/leads.jade")!= "Back to My Leads"

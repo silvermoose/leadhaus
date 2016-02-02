@@ -1,23 +1,36 @@
-extends base
+doctype html
+html
+    head
+        //title Dashboard :: Register
+        link(rel="stylesheet" href="/css/bootstrap.min.css")
+        link(rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css")
+        link(rel='stylesheet', href='stylesheets/style.css')
+    body
+        .login.well
 
-block vars
-    - var title = 'Login'
+            :verbatim
+            include navbar.html
+            br
+            br
+            h1 Login!
+            hr
+            form(id='login-form', method='POST', action='/login' novalidate)
+                .form-group
+                   div
+                    label(for='username') Username
+                    input(type='email', name='username', size='25', class='form-control',
+                    id='username', placeholder='Your username is your email',
+                    required, data-required-msg='Username required')
+                .form-group
+                   div
+                    label(for='password') Password
+                    input(type='password', name='password', size='25', class='form-control',
+                    id='password', placeholder='Enter password',
+                    required, data-required-msg='Password is required')
+                .form-group
+                    button.btn.btn-default Login
 
-block body
-    h1 Log Into Your Account
-
-    if error
-        p ERROR: #{error}
-
-    form(method="post")
-
-        span Email:
-        input(type="email", name="email", required=true)
-        br
-
-        span Password:
-        input(type="password", name="password", required=true)
-        br
-
-        input(type="submit")
+    //Placed at the end of the document so the pages load faster
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js')
+    script(src='/bootstrap-3.3.1/dist/js/bootstrap.min.js')
 

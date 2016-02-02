@@ -1,0 +1,34 @@
+doctype html
+html
+    title= title
+    link(rel='stylesheet', href='/css/bootstrap.min.css')
+    link(rel='stylesheet', href='/css/bootstrap-responsive.min.css')
+    link(rel='stylesheet', href='/css/bootstrap-theme.min.css')
+    link(rel='stylesheet', href='/css/style.css')
+ body
+  .navbar.navbar-inverse.navbar-fixed-top(role='navigation' style="z-index: 10;")
+      .container
+          .navbar-header
+            button.navbar-toggle(type='button', data-toggle='collapse', data-target='.navbar-collapse')
+              span.sr-only Toggle navigation
+              span.icon-bar
+              span.icon-bar
+              span.icon-bar
+           a.navbar-brand(href='/' align="left") LeadsHaus
+          .navbar-collapse.collapse
+            ul.nav.navbar-nav
+              - var obj = { 'home':'Home', 'newlead':'New Lead' }
+                - each val, key in obj
+                  - if (id == key)
+                    li.active
+                      a(href='/#{key}') #{val}
+                  - else            
+                    li
+                      a(href='/#{key}') #{val}
+
+      //Placed at the end of the document so the pages load faster
+      script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js')
+      script(src='/bootstrap-3.3.1/dist/js/bootstrap.min.js')
+  //block content
+
+    //include footer

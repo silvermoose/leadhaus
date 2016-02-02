@@ -1,0 +1,30 @@
+doctype html
+html
+    head
+        title= title
+        link(rel='stylesheet', href='/css/bootstrap.min.css')
+        link(rel='stylesheet', href='/css/bootstrap-responsive.min.css')
+        link(rel='stylesheet', href='/css/bootstrap-theme.min.css')
+        link(rel='stylesheet', href='/css/style.css')
+
+     body
+     .navbar.navbar-inverse.navbar-fixed-top
+         .container
+          .navbar-header
+            button.navbar-toggle(type='button', data-toggle='collapse', data-target='.navbar-collapse')
+              span.sr-only Toggle navigation
+              span.icon-bar
+              span.icon-bar
+              span.icon-bar
+            a navbar-brand(href='/' align="left") LeadsHaus
+          .navbar-collapse.collapse
+                ul.nav.navbar-nav
+                  - var obj = { 'home':'Home', 'newlead':'New Lead' }
+                    - each val, key in obj
+                      - if (id == key)
+                        li.active
+                          a(href='/#{key}') #{val}
+                      - else
+                        li
+                          a(href='/#{key}') #{val}
+

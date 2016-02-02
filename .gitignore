@@ -1,4 +1,7 @@
-node_modules
-.env
-Dockerfile
+/node_modules
 docker-compose.yml
+leadhaus_config.txt
+heroku_leadhaus_db_config.txt
+heroku_leadhaus_leads_jade.txt
+leadhaus_leads_list.jade
+.gitignore

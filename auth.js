@@ -1,7 +1,7 @@
 
 var bcrypt = require('bcrypt'),
     db = require('./pghelper'),
-    config = require('./config'),
+  //  config = require('./config'),
     uuid = require('node-uuid'),
     Q = require('q'),
     validator = require('validator'),
@@ -42,6 +42,27 @@ function comparePassword(password, hash, callback) {
     });
 }
 
+
+/**
+ * Create an access token
+ * @param user
+ * @returns {promise|*|Q.promise}
+ */
+function createAccessToken(user) {
+    winston.info('createAccessToken');
+    var token = uuid.v4(),
+        deferred = Q.defer();
+
+    db.query('INSERT INTO tokens (userId, token) VALUES ($1, $2)', [user.username, token])
+        .then(function() {
+            deferred.resolve(token);
+        })
+        .catch(function(err) {
+            deferred.reject(err);
+        });
+    return deferred.promise;
+}
+
 /**
  * Regular login with application credentials
  * @param req
@@ -53,7 +74,7 @@ function login(req, res, next) {
     winston.info('login');
 
     var creds = req.body;
-    console.log(creds);
+    console.log(req.body);
 
     // Don't allow empty passwords which may allow people to login using the email address of a Facebook user since
     // these users don't have passwords
@@ -61,7 +82,7 @@ function login(req, res, next) {
         return res.send(401, invalidCredentials);
     }
 
-    db.query('SELECT firstName, lastName, email, password FROM salesforce.contact WHERE email=$6', [creds.email], true)
+    db.query('SELECT firstName, lastName, email, password FROM salesforce.contact WHERE email=$1', [creds.username], true)
         .then(function (user) {
             if (!user) {
                 return res.send(401, invalidCredentials);
@@ -71,7 +92,7 @@ function login(req, res, next) {
                 if (match) {
                     createAccessToken(user)
                         .then(function(token) {
-                            return res.send({'user':{'email': user.email, 'firstName': user.firstname, 'lastName': user.lastname}, 'token': token});
+                            return res.send({'user':{'username': user.email, 'firstName': user.firstname, 'lastName': user.lastname}, 'token': token});
                         })
                         .catch(function(err) {
                             return next(err);
@@ -119,15 +140,17 @@ function signup(req, res, next) {
     if (!validator.isEmail(user.username)) {
         return res.send(400, "Invalid email address");
     }
-    if (!validator.isLength(user.firstName, 1) || !validator.isAlphanumeric(user.firstName)) {
+    if (!validator.isLength(user.firstname, 1) || !validator.isAlphanumeric(user.firstname)) {
         return res.send(400, "First name must be at least one character");
     }
-    if (!validator.isLength(user.lastName, 1) || !validator.isAlphanumeric(user.lastName)) {
+    if (!validator.isLength(user.lastname, 1) || !validator.isAlphanumeric(user.lastname)) {
         return res.send(400, "Last name must be at least one character");
     }
     if (!validator.isLength(user.password, 4)) {
         return res.send(400, "Password must be at least 4 characters");
     }
+
+    console.log('line 3');
 
     db.query('SELECT email FROM salesforce.contact WHERE email=$1', [user.email], true)
         .then(function (u) {
@@ -155,10 +178,12 @@ function signup(req, res, next) {
 function createUser(user, password) {
 
     var deferred = Q.defer(),
-        externalUserId = (+new Date()).toString(36); // TODO: more robust UID logic
+        externalUserId = (+new Date()).toString(36),
+        createdDate = (+new Date()).toString(36) ; // TODO: more robust UID logic
 
-    db.query('INSERT INTO salesforce.contact( email, firstname, lastname, password) VALUES ($1, $2, $3, $4) RETURNING username, firstName, lastName, password',
-        [user.email, user.firstName, user.lastName, password], true)
+
+    db.query('INSERT INTO salesforce.contact( email, firstname, lastname,  password, accountid) VALUES ($1, $2, $3, $4, $5) RETURNING email, firstName, lastName, password',
+        [user.username, user.firstname, user.lastname, password,'0016100000PGbTm'], true)
         .then(function (insertedUser) {
             deferred.resolve(insertedUser);
         })
@@ -166,6 +191,34 @@ function createUser(user, password) {
             deferred.reject(err);
         });
     return deferred.promise;
+};
+
+/**
+ * Validate authorization token
+ * @param req
+ * @param res
+ * @param next
+ * @returns {*|ServerResponse}
+ */
+function validateToken (req, res, next) {
+    var token = req.headers['authorization'];
+    if (!token) {
+        token = req.session['token']; // Allow token to be passed in session cookie
+    }
+    if (!token) {
+        winston.info('No token provided');
+        return res.send(401, 'Invalid token');
+    }
+    db.query('SELECT * FROM tokens WHERE token = $1', [token], true, true)
+        .then(function (item) {
+            if (!item) {
+                winston.info('Invalid token');
+                return res.send(401, 'Invalid token');
+            }
+            req.userId = item.userid;
+            return next();
+        })
+        .catch(next);
 };
 
 exports.login = login;
